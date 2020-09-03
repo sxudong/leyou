@@ -260,14 +260,18 @@
                         };
                         // 提交订单
 						ly.http.post("/order-service/order",order,{
-                            transformResponse: [function (data) {
-                                return data;
-                            }]
+							transformResponse:[
+								//对响应进行处理的回调
+								function (data) {
+									//不对data做任何处理，直接返回
+									return data;
+								}
+							]
 						}).then(resp=>{
                             // 订单创建成功，删除selectedCarts
                             ly.store.del("selectedCarts");
                             // 跳转到付款页,并传递付款id
-                            window.location.href = "/pay.html?id=" + resp.data;
+                            window.location.href = "/pay.html?id=" + resp.data; // id
 						}).catch(() => {
 						    alert("创建订单失败！");
 						})
